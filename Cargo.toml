@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 open = "1"
-config = "0.13.2"
+config_crate = { version = "0.13.2", package = "config" }
