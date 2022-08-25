@@ -2,26 +2,21 @@ use open;
 use config::Config;
 use std::collections::HashMap;
 
-fn get_settings() -> HashMap<String, String> {
-    let default_settings = Config::builder()
+fn get_settings(file_path: &str) -> HashMap<String, String> {
+    let settings = Config::builder()
     // Add in `./Settings.toml`
-    .add_source(config::File::with_name("./Default_Settings"))
+    .add_source(config::File::with_name(file_path))
     .build()
     .unwrap();
-
-    let default_settings: HashMap<String, String> = default_settings
+    let serialized_settings: HashMap<String, String> = settings
     .try_deserialize::<HashMap<String, String>>()
     .unwrap();
+    serialized_settings
+}
 
-    let custom_settings = Config::builder()
-    // Add in `./Custom_Settings.toml`
-    .add_source(config::File::with_name("./Custom_Settings"))
-    .build()
-    .unwrap();
-
-    let mut custom_settings: HashMap<String, String> = custom_settings
-    .try_deserialize::<HashMap<String, String>>()
-    .unwrap();
+fn build_settings() -> HashMap<String, String> {
+    let default_settings = get_settings("./Default_Settings");
+    let mut custom_settings = get_settings("./Custom_Settings");
 
     let final_settings = default_settings.into_iter().map(|(key, value)| {
         if custom_settings.contains_key(&key) {
@@ -35,7 +30,7 @@ fn get_settings() -> HashMap<String, String> {
 }
 
 fn main() {
-    let mut settings = get_settings();
+    let mut settings = build_settings();
     let url = settings.remove("url");
     match url {
         Some(url) => {
