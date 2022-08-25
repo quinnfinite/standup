@@ -1,10 +1,10 @@
-use config_crate::Config;
+use config_crate::{ Config, File };
 use std::collections::HashMap;
 
 fn get_config(file_path: &str) -> HashMap<String, String> {
     let settings = Config::builder()
     // Add in `./Settings.toml`
-    .add_source(config_crate::File::with_name(file_path))
+    .add_source(File::with_name(file_path))
     .build()
     .unwrap();
     let serialized_settings: HashMap<String, String> = settings
