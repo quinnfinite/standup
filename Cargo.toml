@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 open = "1"
+config = "0.13.2"
