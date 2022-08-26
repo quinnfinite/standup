@@ -25,7 +25,7 @@ fn main() {
     match command.as_str() {
         "go" => {
             println!("Starting Standup");
-            // go_to_standup(config);
+            go_to_standup(config);
             keep_track_of_whos_gone();
         }
         "notes" => {
@@ -36,8 +36,6 @@ fn main() {
 }
 
 fn keep_track_of_whos_gone() -> Result<(), Box<dyn Error>>  {
-    // let mut has_spoken: Vec<&str> = vec![];
-    // let has_spoken = Arc::new(vec![]);
     let has_spoken = Arc::new(Mutex::new(vec![]));
     
     let thread_join_handle = thread::spawn(move || loop {
