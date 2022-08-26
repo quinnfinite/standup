@@ -23,7 +23,7 @@ fn main() {
     let command = args.command;
     
     match command.as_str() {
-        "go" => {
+        "start" => {
             println!("Starting Standup");
             go_to_standup(config);
             keep_track_of_whos_gone();
